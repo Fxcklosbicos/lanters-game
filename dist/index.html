@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.186.1",
+    "three/": "https://esm.sh/three@0.186.1/"
+  }
+}
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Lanternfall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:wght@500;600&display=swap">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <svg class="defs" aria-hidden="true">
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/></symbol>
+      <symbol id="i-ward" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke-dasharray="2 4"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="4" r="1.5" fill="currentColor"/><circle cx="19" cy="16" r="1.5" fill="currentColor"/><circle cx="5" cy="16" r="1.5" fill="currentColor"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2 7 7 2-7 2-2 7-2-7-7-2 7-2z"/></symbol>
+      <symbol id="i-nova" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4M12 3v2"/></symbol>
+      <symbol id="i-wick" viewBox="0 0 24 24"><path d="M9 8h6l2 3v8H7v-8zM10 8V6a2 2 0 0 1 4 0v2M12 13v3M7 11h10"/></symbol>
+      <symbol id="i-swift" viewBox="0 0 24 24"><path d="M8 4v9l-3 3v3h14v-2c0-2-2-3-5-4V4zM5 16h14"/></symbol>
+      <symbol id="i-vigor" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></symbol>
+      <symbol id="i-haste" viewBox="0 0 24 24"><path d="M7 4h10M7 20h10M8 4c0 6 8 5 8 16M16 4c0 6-8 5-8 16"/></symbol>
+      <symbol id="i-might" viewBox="0 0 24 24"><path d="M20 4l-10 10M20 4h-4M20 4v4M7 11l6 6M8 16l-4 4"/></symbol>
+      <symbol id="i-lance" viewBox="0 0 24 24"><path d="M4 20L20 4M14 4h6v6M4 14l6 6"/></symbol>
+      <symbol id="i-dash" viewBox="0 0 24 24"><path d="M5 6l6 6-6 6M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 10v4h3l5 4V6l-5 4zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+      <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 10v4h3l5 4V6l-5 4zM16 9l5 6M21 9l-5 6"/></symbol>
+    </svg>
+
+    <canvas id="stage" aria-label="A lantern-bearer in a ruined vale at dusk"></canvas>
+
+    <header class="hud" id="hud" hidden>
+      <div class="hud__xp" id="xp" role="progressbar" aria-label="Embers toward the next level" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+      <div class="hud__life">
+        <span class="hud__level">Lv <b id="level">1</b></span>
+        <div class="hud__hp" id="hp" role="progressbar" aria-label="Health" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+      </div>
+      <p class="hud__dawn"><span>Dawn in</span> <b id="dawn">6:00</b></p>
+      <div class="hud__side">
+        <p class="hud__kills"><b id="kills">0</b> <span>shades</span></p>
+        <button class="icon" id="mute" type="button" aria-label="Mute sound" aria-pressed="false"><svg><use href="#i-sound"/></svg></button>
+        <button class="icon" id="pause" type="button" aria-label="Pause"><svg><use href="#i-pause"/></svg></button>
+      </div>
+    </header>
+    <ul class="kit" id="kit" aria-label="Boons you carry" hidden></ul>
+    <div class="veil" id="veil" aria-hidden="true"></div>
+    <p class="omen" id="omen" role="status"></p>
+    <button class="dash" id="dash" type="button" aria-label="Dash" aria-keyshortcuts="Space" hidden><svg><use href="#i-dash"/></svg></button>
+    <div class="hits" id="hits" aria-hidden="true"></div>
+    <div class="stick" id="stick" aria-hidden="true" hidden><i></i></div>
+
+    <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet__head">
+        <p class="sheet__eyebrow" id="sheet-eyebrow">A vigil in the ruined vale</p>
+        <h1 class="sheet__title" id="sheet-title">Lanternfall</h1>
+        <p class="sheet__text" id="sheet-text">The shades come when the light goes. Hold the ruin until dawn.</p>
+      </div>
+      <div class="boons" id="boons"></div>
+      <div class="sheet__foot">
+        <button class="primary" id="go" type="button">Light the lantern</button>
+        <p class="sheet__note" id="sheet-note">Move with WASD or drag. Space to dash. The lantern does the rest.</p>
+      </div>
+    </section>
+
+    <script type="module" src="/script.js"></script>
+  </body>
+</html>
